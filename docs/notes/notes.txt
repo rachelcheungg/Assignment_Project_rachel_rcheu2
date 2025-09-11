@@ -1,0 +1,21 @@
+Ideas & Selection Rationale:
+* Assignment Project Ideas:
+    * sales tracker
+        - tracks sales happening in stores/online and lists them on the website
+        - can display the most popular sales and filter sales by category (electronics, clothes, etc.)
+    * shared calendar
+        - share a calendar with friends and see each of their schedules
+        - send hangout requests
+For the assignment project, I will do the sales tracker.
+I think it would be more interesting to build than a shared calendar web app.
+
+Wireframe Notes:
+I only have an idea for the homepage currently.
+I wanted it to have the main features, which are searching by name or category and displaying the most popular sales.
+
+Branching Strategy:
+I chose to use the GitHub Flow branching strategy because it keeps things simple.
+There will be a main branch and a features branch.
+Each feature will generally be the assignment for the week.
+
+Branch Usage Reflections:

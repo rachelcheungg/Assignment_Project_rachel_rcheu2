@@ -1,0 +1,1 @@
+The sales tracker displays sales across different stores on one platform. Users can browse sales happening at the moment by category or popularity. 
