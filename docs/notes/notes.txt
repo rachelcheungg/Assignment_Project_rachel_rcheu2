@@ -19,3 +19,14 @@ There will be a main branch and a features branch.
 Each feature will generally be the assignment for the week.
 
 Branch Usage Reflections:
+I named my branch features for the time being since we're just getting started.
+I was able to create, commit, and push without any issues.
+
+Django Setup
+I chose the name "sales_tracker" because it's my main project goal: to build a website that tracks sales from stores.
+I named the startapp folder "sales" for the time being, since I couldn't think of what else to name it.
+It was configured correctly.
+
+Virtual Environment Choices:
+I chose to use my own virtual environment.
+It's more ideal for Python-only projects and I mainly just prefer this over the conda environment.
