@@ -1,0 +1,23 @@
+Why these models/fields?
+* First, I created different folders for each of my features.
+  The main project folder I created last week was renamed from "sales_tracker" to "login".
+  I also created two new folders names "search" and "personalization".
+* The "login" folder contains the "User" model, which stores basic information like first and last name,
+  username, email, and phone number. I haven't added a password field yet, but that's something for the future.
+  The username serves as the primary key, since it should be unique. This way, I don't have to create a separate user_id field.
+  Every field in the "User" model is required except for phone number because I think websites don't always require phone numbers as long as there's an email.
+  Lastly, I added string representation (__str__) for readability.
+* The "personalization" folder contains the "Favorite" model, which is meant to contain the websites each user favorites.
+  I still need to create a composite primary key for this model (which is just a combination of "username" from the "User" model and "website_address" from the "Website" model).
+  I also added string representation (__str__) for readability.
+* The "search" folder contains two models: "Website" and "Category".
+  The "Website" model has "website_address" as the primary key since this web addresses are unique.
+  It also has "website_name" so users know which store/website it is.
+  The "Category" model has "category_name" as the primary key so there are no duplicate categories.
+  I also added string representation (__str__) for readability for both models.
+Your relationship choices (ForeignKey, on_delete rationale),
+*
+Any constraints (unique, ordering),
+*
+How you seeded test data.
+* I added test data through the admin page.
