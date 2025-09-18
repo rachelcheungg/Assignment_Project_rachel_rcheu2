@@ -5,3 +5,6 @@ from search.models import Website
 class Favorite(models.Model):
     user = models.ForeignKey("login.User", on_delete=models.CASCADE)
     website = models.ForeignKey("search.Website", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} | {self.website.website_name}"
