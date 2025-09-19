@@ -26,3 +26,10 @@ Any constraints (unique, ordering)
   I think I want all the models to be ordered alphabetically, but I haven't figured out how to do that yet.
 How you seeded test data.
 * I added test data through the admin page.
+  I also added screenshots of the data to the notes folder to prove cases of uniqueness and use of foreign keys.
+
+Additional notes/updates:
+* I created a new folder within the notes folder because I uploaded screenshots of me adding data on the admin page.
+  This way, everything will be a bit more organized. ER Diagram will also be in the new folder titled "assignment-3".
+* After creating and implementing the models, I need to redo my ER Diagram, so I deleted the old on and put in a new one.
+* I also updated the README with everything from above.
