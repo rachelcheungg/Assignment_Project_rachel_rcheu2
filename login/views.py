@@ -12,8 +12,6 @@ def user_list(request):
     return HttpResponse(output)
 
 
-
-
 def user_list_render(request) :
     users = User.objects.all()
     return render(request, "login/user_list.html", {"users": users})

@@ -1,10 +1,10 @@
-Updated README.md (2 - 3 sentences) describing what you added in A4.
+I first created the HttpResponse view, which is the manual way of sending a response back to the browser.
+Then I created the render view, which is a shortcut that automates what happens in HttpResponse.
+I used the same html template for both views, but created different url addresses for each.
 
-docs/notes/notes.txt explaining:
+To make the urls more organized, I created an app-level urls.py that adds specific endpoints to the base path in the project-level urls.py.
 
-why you wrote two views,
+I had some issues along the way with getting the data to show on the website, but I was able to fix it.
+It was because I had the wrong variable name written in the user_list.html template.
 
-what’s different between HttpResponse and render,
-
-any URL/template decisions you made.
-
+I'd still like to update the base.html file to make it look better on the UI side.

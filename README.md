@@ -1,6 +1,7 @@
 The sales tracker displays sales across different stores on one platform. 
 Users can browse sales happening at the moment by category or popularity.
 
+Week 3: \
 Why these models/fields?
 * First, I created different folders for each of my features.
   The main project folder I created last week was renamed from "sales_tracker" to "login".
@@ -32,3 +33,10 @@ Any constraints (unique, ordering)
 
 How you seeded test data.
 * I added test data through the admin page.
+
+Week 4: \
+I added the views for my user data using HttpResponse, render(), and a class-based list view.
+I added a base.html file with the general structure of the website.
+I also added an html template for my login feature that extends base.html.
+Lastly, I needed to route each of my views. They all use the same html file (user_list.html),
+so I created a unique url pattern for each of the views. These were the main changes I added for the week.
