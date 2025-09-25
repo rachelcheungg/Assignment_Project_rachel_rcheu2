@@ -1,8 +1,11 @@
 <!-- this is the code from week-4 slides -->
 {% extends "login/base.html" %}
 
-{% block user_content %}
-<h2>User List</h2>
+{% block title %}User List{% endblock %}
+{% block header %}User List{% endblock %}
+
+{% block content %}
+<h2>Users</h2>
 <ul>
     {% for user_for_loop in users %}
         <li>

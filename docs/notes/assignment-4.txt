@@ -1,0 +1,10 @@
+Updated README.md (2 - 3 sentences) describing what you added in A4.
+
+docs/notes/notes.txt explaining:
+
+why you wrote two views,
+
+what’s different between HttpResponse and render,
+
+any URL/template decisions you made.
+
