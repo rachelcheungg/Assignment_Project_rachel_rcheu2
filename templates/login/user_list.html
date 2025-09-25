@@ -1,0 +1,15 @@
+<!-- this is the code from week-4 slides -->
+{% extends "login/base.html" %}
+
+{% block user_content %}
+<h2>User List</h2>
+<ul>
+    {% for user_for_loop in users %}
+        <li>
+            <a href=""> {{ user_for_loop }}</a>
+        </li>
+    {% empty %}
+        <li>No users yet!</li>
+    {% endfor %}
+</ul>
+{% endblock %}
