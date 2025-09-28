@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}SaleMate{% endblock %}
+{% block header %}Category List{% endblock %}
+
+{% block content %}
+<h2>Categories</h2>
+<ul>
+    {% for category_for_loop in category_list %}
+        <li>
+            <a href=""> {{ category_for_loop }}</a>
+        </li>
+    {% empty %}
+        <li>No categories yet!</li>
+    {% endfor %}
+</ul>
+{% endblock %}

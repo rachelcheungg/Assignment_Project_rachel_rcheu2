@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}SaleMate{% endblock %}
+{% block header %}Website List{% endblock %}
+
+{% block content %}
+<h2>Websites</h2>
+<ul>
+    {% for website_for_loop in websites %}
+        <li>
+            <a href=""> {{ website_for_loop }}</a>
+        </li>
+    {% empty %}
+        <li>No websites yet!</li>
+    {% endfor %}
+</ul>
+{% endblock %}
