@@ -9,7 +9,7 @@
 <ul>
     {% for user_for_loop in users %}
         <li>
-            <a href=""> {{ user_for_loop }}</a>
+            <a href="{% url 'user-detail-url' user_for_loop.username %}"> {{ user_for_loop }}</a>
         </li>
     {% empty %}
         <li>No users yet!</li>

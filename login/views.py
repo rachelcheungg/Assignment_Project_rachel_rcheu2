@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.views.generic import ListView
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from django.views import View
+from django.shortcuts import get_object_or_404, render
 from .models import User
 
 def user_list(request):
@@ -16,8 +17,12 @@ def user_list_render(request) :
     users = User.objects.all()
     return render(request, "login/user_list.html", {"users": users})
 
-# I asked chatgpt for help here to make sure the data showed on the website
 class UserListView(ListView):
     model = User
     template_name = "login/user_list.html"
     context_object_name = "users"
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = "login/user_detail.html"
+    context_object_name = "user"
