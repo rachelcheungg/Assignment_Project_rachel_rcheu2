@@ -40,3 +40,7 @@ I added a base.html file with the general structure of the website.
 I also added an html template for my login feature that extends base.html.
 Lastly, I needed to route each of my views. They all use the same html file (user_list.html),
 so I created a unique url pattern for each of the views. These were the main changes I added for the week.
+
+Week 5: \
+This week, I implemented base CBV onto my website model, implemendted generic CBV onto my categories model, and implemented detail view for my users model.
+I also added a new html file for my user detail view, and configured the urls respectively.

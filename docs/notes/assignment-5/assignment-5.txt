@@ -1,0 +1,24 @@
+Difference between base CBVs and generic CBVs.
+* Base CBVs give you a blank structure where you must write the logic yourself, since the view doesn’t know anything
+  about your models. This is useful when you need full control and have very custom logic beyond simple CRUD patterns.
+  In contrast, generic CBVs are designed for common use cases such as listing or editing objects. By setting
+  model = Student, Django automatically fetches the data and even provides extra features like pagination, reducing
+  boilerplate and saving time. In short, base CBVs offer flexibility and control, while generic CBVs offer convenience
+  and built-in functionality for standard patterns.
+
+Why generic views reduce boilerplate.
+* Generic views in Django reduce boilerplate because they provide built-in, reusable implementations for common patterns
+  like displaying lists, showing detail pages, creating, updating, and deleting objects. Instead of writing repetitive
+  code to query a model, pass data to a template, and handle form submissions, generic views handle these steps
+  automatically with minimal configuration. This not only saves time but also makes the codebase more concise and easier
+  to maintain, since developers can focus on customizing only the parts that are unique to their application. By reducing
+  duplication, generic views improve readability and consistency across the project.
+
+Why refactoring URLs improves maintainability.
+* Refactoring URLs in a Django project improves maintainability by creating a clearer, more organized structure that makes
+  it easier to update, debug, and collaborate on the codebase. When URLs are cleanly defined and grouped, the connections
+  between views, models, and templates become more readable, reducing confusion for developers navigating the project.
+  This organization also helps simplify future updates since changes to routes can be made in a single place without
+  breaking consistency across the application. Refactoring also encourages reusability, as common logic can be extracted
+  into reusable functions, classes, or even shared Django apps, supporting scalability and long-term efficiency.
+  Overall, a well-structured URL configuration ensures that the project remains easy to understand, extend, and maintain.
