@@ -26,3 +26,5 @@ class UserDetailView(DetailView):
     model = User
     template_name = "login/user_detail.html"
     context_object_name = "user"
+    slug_field = "username"
+    slug_url_kwarg = "username"
