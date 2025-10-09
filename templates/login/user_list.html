@@ -4,6 +4,38 @@
 {% block title %}SaleMate{% endblock %}
 {% block header %}User List{% endblock %}
 
+{% block send_search %}
+  <form method="get" class="row g-2 align-items-center mt-4">
+    <div class="col-12 col-sm-6 col-md-4">
+      <input type="search" name="q" value="{{ q }}" class="form-control"
+             placeholder="Search by username">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" type="submit">Search</button>
+      {% if q %}<a class="btn btn-outline-secondary ms-2" href="{% url 'user-list' %}">Clear</a>{% endif %}
+    </div>
+  </form>
+{% endblock %}
+
+{% block filter %}
+  {% if q %}
+    <p class="text-muted mt-3 mb-2">result for “{{ q }}”</p>
+    <div class="card">
+      <ul class="list-group list-group-flush">
+        {% for user_item in search_results %}
+          <li class="list-group-item">
+            <a href="{% url 'user-detail-url' user_item.username %}">{{ user_item.username }}</a>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted"><em>No users found.</em></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <p class="text-muted mt-3">All users</p>
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 <h2>Users</h2>
 <ul>

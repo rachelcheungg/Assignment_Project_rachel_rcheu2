@@ -22,6 +22,25 @@ class UserListView(ListView):
     template_name = "login/user_list.html"
     context_object_name = "users"
 
+    def get_context_data(self, **kwargs):
+
+        ctx = super().get_context_data(**kwargs)
+
+        q = self.request.GET.get("q")
+
+        if q:
+            search_qs = User.objects.filter(username__icontains=q)
+            ctx["users"] = search_qs
+        else:
+            search_qs = None
+
+        ctx["q"] = q
+        ctx["search_results"] = search_qs
+
+        ctx["total_users"] = User.objects.count()
+
+        return ctx
+
 class UserDetailView(DetailView):
     model = User
     template_name = "login/user_detail.html"

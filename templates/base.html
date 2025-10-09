@@ -11,8 +11,11 @@
     </div>
   </header>
 
-  {% block content %}
-  {% endblock %}
+  <main class="container">
+    {% block send_search %}{% endblock %}
+    {% block filter %}{% endblock %}
+    {% block content %}{% endblock %}
+  </main>
 
 </body>
 </html>
