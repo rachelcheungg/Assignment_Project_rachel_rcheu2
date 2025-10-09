@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from .models import User
+from django.db.models import Count, Q
 
 def user_list(request):
     users = User.objects.all()
@@ -38,6 +39,12 @@ class UserListView(ListView):
         ctx["search_results"] = search_qs
 
         ctx["total_users"] = User.objects.count()
+
+        ctx["websites_per_user"] = (
+            User.objects
+            .annotate(n_favourites=Count("favorited_by"))
+            .order_by("n_favourites")
+        )
 
         return ctx
 
