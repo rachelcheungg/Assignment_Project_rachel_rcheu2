@@ -42,7 +42,7 @@ class UserListView(ListView):
 
         ctx["websites_per_user"] = (
             User.objects
-            .annotate(n_favourites=Count("favorited_by"))
+            .annotate(n_favourites=Count("favorites"))
             .order_by("n_favourites")
         )
 
