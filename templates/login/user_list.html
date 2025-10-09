@@ -51,7 +51,7 @@
 <h3>Number of websites each user favorites</h3>
 <ul>
   {% for user in websites_per_user %}
-    <li>{{ user.username }}: {{ user.n_favourites }} website{% if user.n_favourites != 1 %}s{% endif %}</li>
+    <li>{{ user.username }}: {{ user.n_favourites }} favorite websites{% if user.n_favourites != 1 %}s{% endif %}</li>
   {% empty %}
     <li>No users or favorites yet!</li>
   {% endfor %}
