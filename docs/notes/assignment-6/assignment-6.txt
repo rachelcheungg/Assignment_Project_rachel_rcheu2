@@ -1,0 +1,21 @@
+Filtering vs. Aggregation
+* Filtering is used to narrow down a queryset based on specific conditions (e.g., showing only users whose usernames contain certain text).
+* Aggregation is used to compute summary values, such as totals or counts, across multiple rows of data.
+* The project uses the Django ORM’s annotate() and aggregate() methods to perform these summaries.
+* One summary shows the total number of users in the database.
+* Another summary shows how many websites each user has favorited.
+* A separate summary shows the total number of websites and the number of websites in each category.
+* These summaries illustrate how the ORM can perform database-level computations efficiently without writing raw SQL.
+* Filtering and aggregation enable dynamic, data-driven pages that provide both detail and overview information.
+
+Challenges
+* The main challenges I faced in this assignment was getting the counts to show up on the website.
+* In class, I showed that my website failed to display the number of websites each user favorited.
+* I had help from classmates (Blake) and looked back at the slides to see what I missed. I also used ChatGPT to help fix my issue.
+
+Next steps
+* Some of the next steps I'd like to take:
+    1. Improve the UI of my website using CSS/Bootstrap.
+    2. Create a detail view and search function for my categories so users can search and view websites by/within each category.
+    3. Create working links for my website list page.
+    4. Create a page that lists each users' favorited websites.
