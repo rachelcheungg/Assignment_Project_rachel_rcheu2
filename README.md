@@ -44,3 +44,7 @@ so I created a unique url pattern for each of the views. These were the main cha
 Week 5: \
 This week, I implemented base CBV onto my website model, implemendted generic CBV onto my categories model, and implemented detail view for my users model.
 I also added a new html file for my user detail view, and configured the urls respectively.
+
+Week 6: \
+In Assignment 6, I added data aggregation features to display summary statistics using Django ORM. 
+Specifically, I implemented counts of websites favorited by each user and counts of websites per category. These additions demonstrate the use of `annotate()` and `Count()` to compute grouped summaries in Django views.
