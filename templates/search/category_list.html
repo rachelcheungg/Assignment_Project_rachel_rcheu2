@@ -28,4 +28,15 @@
   {% endfor %}
 </ul>
 
+  <div class="card mt-3">
+    <div class="card-header py-2"><strong>Bar Chart: Websites per Category</strong></div>
+    <div class="card-body text-center">
+
+        <!-- Here, using the 'url' tag, I'm directly referencing the chart projected at a url -->
+      <img src="{% url 'chart-categories' %}" alt="Websites per category chart"
+           class="img-fluid" style="max-width: 480px;">
+
+    </div>
+  </div>
+
 {% endblock %}
