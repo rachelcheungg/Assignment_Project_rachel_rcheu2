@@ -69,3 +69,22 @@ def category_counts_chart(request):
     buf.seek(0)
 
     return HttpResponse(buf.getvalue(), content_type="image/png")
+
+
+def total_websites_chart(request):
+    total = Website.objects.count()
+
+    fig, ax = plt.subplots(figsize=(3, 4), dpi=150)
+    ax.bar(["Total Websites"], [total], color="#13294B")
+    ax.set_ylabel("Number of Websites")
+    ax.set_title("Total Websites")
+    ax.tick_params(axis="x", labelsize=10)
+    ax.tick_params(axis="y", labelsize=8)
+    fig.tight_layout()
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    plt.close(fig)
+    buf.seek(0)
+
+    return HttpResponse(buf.getvalue(), content_type="image/png")
