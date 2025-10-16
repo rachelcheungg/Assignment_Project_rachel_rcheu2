@@ -35,11 +35,16 @@
         <!-- Here, using the 'url' tag, I'm directly referencing the chart projected at a url -->
       <img src="{% url 'chart-categories' %}" alt="Websites per category chart"
            class="img-fluid" style="max-width: 480px;">
-
+      <p class="mt-2 text-muted small">
+        Each bar represents how many websites belong to a given category.
+      </p>
     </div>
   </div>
 
 <h3>Total Websites</h3>
 <img src="{% url 'chart-total-websites' %}" alt="Total websites chart" class="img-fluid" style="max-width:300px;">
+<p class="mt-2 text-muted small">
+    This chart shows the overall total number of websites stored in the system.
+</p>
 
 {% endblock %}
