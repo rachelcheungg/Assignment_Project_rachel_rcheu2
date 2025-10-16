@@ -1,0 +1,12 @@
+* Static files in Django are files like CSS, JavaScript, and images that don’t change dynamically.
+  Django collects and serves them through the /static/ directory so they can be accessed by the browser.
+* Static file setup uses {% load static %} and {% static 'css/style.css' %} in base.html, which tells Django
+  where to find and serve static assets for consistent site-wide styling.
+* The chart I created visualizes aggregated data from the database. In this case, the number of
+  websites per category. The chart is generated in the view using Matplotlib and displayed as a PNG image in
+  the template.
+* I used Django’s Count() to summarize data directly from the database before plotting it.
+* BytesIO is a Python class that allows Matplotlib to save the created chart as image data that can be sent
+  in an HTTP response.
+* tight_layout() is a Matplotlib function that automatically adjusts spacing between chart elements so labels and
+  titles don’t overlap.

@@ -46,5 +46,10 @@ This week, I implemented base CBV onto my website model, implemendted generic CB
 I also added a new html file for my user detail view, and configured the urls respectively.
 
 Week 6: \
-In Assignment 6, I added data aggregation features to display summary statistics using Django ORM. 
+In assignment 6, I added data aggregation features to display summary statistics using Django ORM. 
 Specifically, I implemented counts of websites favorited by each user and counts of websites per category. These additions demonstrate the use of `annotate()` and `Count()` to compute grouped summaries in Django views.
+
+Week 7: \
+In assignment 7, I implemented a data visualization feature using Matplotlib. 
+I added ORM aggregations in views.py to generate summary statistics and display them as a bar chart on the site. 
+I also set up a custom /static/ folder with a global CSS file (style.css) to apply a consistent color theme and layout across all pages.
