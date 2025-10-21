@@ -3,6 +3,37 @@
 {% block title %}SaleMate{% endblock %}
 {% block header %}Category List{% endblock %}
 
+{% block send_search %}
+    <form method="get">
+       <div class="row g-2 align-items-center">
+        <input type="text" name="q" class="form-control mb-3" placeholder="Search for a category">
+       </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+            {% if q %}<a class="btn btn-outline-secondary ms-2" href="{% url 'categories-list-url' %}">Clear</a>{% endif %}
+        </div>
+    </form>
+{% endblock %}
+
+{% block filter %}
+  {% if q %}
+    <p class="text-muted mt-3 mb-2">result for “{{ q }}”</p>
+    <div class="card">
+      <ul class="list-group list-group-flush">
+        {% for category_item in search_results %}
+          <li class="list-group-item">
+            <a>{{ category_item.category_name }}</a>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted"><em>No categories found.</em></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <p class="text-muted mt-3">All categories</p>
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 <h2>Categories</h2>
 <ul>

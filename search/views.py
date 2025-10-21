@@ -18,6 +18,17 @@ class CategoryListView(ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
+        q = self.request.GET.get("q")
+
+        if q:
+            search_qs = Category.objects.filter(category_name__icontains=q)
+            ctx["categories"] = search_qs
+        else:
+            search_qs = None
+
+        ctx["q"] = q
+        ctx["search_results"] = search_qs
+
         ctx["total_websites"] = Website.objects.count()
 
         ctx["websites_per_category"] = (
