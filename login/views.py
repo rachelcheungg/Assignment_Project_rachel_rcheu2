@@ -54,3 +54,18 @@ class UserDetailView(DetailView):
     context_object_name = "user"
     slug_field = "username"
     slug_url_kwarg = "username"
+
+
+from django.shortcuts import redirect
+from .forms import UserForm
+
+def add_user(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("user-list")
+    else:
+        form = UserForm()
+    return render(request, "login/add_user.html", {"form": form})
+
