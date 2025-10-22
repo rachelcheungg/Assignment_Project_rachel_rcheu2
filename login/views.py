@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from django.views import View
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import User
 from django.db.models import Count, Q
+from .forms import UserForm, UserContactForm, FeedbackForm
+from django.urls import reverse_lazy
 
 def user_list(request):
     users = User.objects.all()
@@ -55,10 +57,6 @@ class UserDetailView(DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
 
-
-from django.shortcuts import render, redirect
-from .forms import UserForm, UserContactForm
-
 def add_user(request):
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -80,5 +78,16 @@ def user_contact(request):
         form = UserContactForm()
     return render(request, "login/user_contact.html", {"form": form})
 
+class FeedbackView(FormView):
+    form_class = FeedbackForm
+    template_name = "login/feedback.html"
+    success_url = reverse_lazy("success-url")
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        feedback = form.cleaned_data['feedback']
+        print(f"Feedback from {username}: {feedback}")
+        return super().form_valid(form)
+
 def success_view(request):
-    return render(request, 'success.html')
+    return render(request, 'login/success.html')

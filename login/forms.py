@@ -15,3 +15,7 @@ class UserForm(forms.ModelForm):
 class UserContactForm(forms.Form):
     name = forms.CharField(max_length=100)
     email = forms.EmailField()
+
+class FeedbackForm(forms.Form):
+    feedback = forms.CharField(widget=forms.Textarea)
+    username = forms.CharField(max_length=100)
