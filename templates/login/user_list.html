@@ -1,62 +1,50 @@
-<!-- this is the code from week-4 slides -->
 {% extends "base.html" %}
 
-{% block title %}SaleMate{% endblock %}
-{% block header %}User List{% endblock %}
+{% block title %}SaleMate - Users{% endblock %}
 
-{% block send_search %}
-  <form method="get" class="row g-2 align-items-center mt-4">
-    <div class="col-12 col-sm-6 col-md-4">
-      <input type="search" name="q" class="form-control"
-             placeholder="Search by username">
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-primary" type="submit">Search</button>
-      {% if q %}<a class="btn btn-outline-secondary ms-2" href="{% url 'user-list' %}">Clear</a>{% endif %}
-    </div>
-  </form>
-{% endblock %}
-
-{% block filter %}
-  {% if q %}
-    <p class="text-muted mt-3 mb-2">result for “{{ q }}”</p>
-    <div class="card">
-      <ul class="list-group list-group-flush">
-        {% for user_item in search_results %}
-          <li class="list-group-item">
-            <a href="{% url 'user-detail-url' user_item.username %}">{{ user_item.username }}</a>
-          </li>
-        {% empty %}
-          <li class="list-group-item text-muted"><em>No users found.</em></li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% else %}
-    <p class="text-muted mt-3">All users</p>
-  {% endif %}
+{% block navbar_form %}
+<form method="get" class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search by username" aria-label="Search" value="{{ q }}">
+  <button class="btn" type="submit">Search</button>
+  {% if q %}<a class="btn btn-outline-secondary ms-2" href="{% url 'user-list' %}">Clear</a>{% endif %}
+</form>
 {% endblock %}
 
 {% block content %}
-<h2>Users</h2>
-<ul>
-    {% for user_for_loop in users %}
-        <li>
-            <a href="{% url 'user-detail-url' user_for_loop.username %}"> {{ user_for_loop }}</a>
+<div class="starter-template">
+  <h2>Users</h2>
+
+  <!-- Search result info -->
+  {% if q %}
+    <p class="text-muted mt-3 mb-2">Results for “{{ q }}”</p>
+  {% else %}
+    <p class="text-muted mt-3 mb-2">All users</p>
+  {% endif %}
+
+  <!-- Users list -->
+  <div class="card mb-4">
+    <ul class="list-group list-group-flush">
+      {% for user_item in users %}
+        <li class="list-group-item">
+          <a href="{% url 'user-detail-url' user_item.username %}">{{ user_item.username }}</a>
         </li>
+      {% empty %}
+        <li class="list-group-item text-muted"><em>No users found.</em></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Total users -->
+  <p><strong>Total users:</strong> {{ total_users }}</p>
+
+  <!-- Websites per user -->
+  <h3>Number of websites each user favorites</h3>
+  <ul>
+    {% for user in websites_per_user %}
+      <li>{{ user.username }}: {{ user.n_favourites }} favorite website{% if user.n_favourites != 1 %}s{% endif %}</li>
     {% empty %}
-        <li>No users yet!</li>
+      <li>No users or favorites yet!</li>
     {% endfor %}
-</ul>
-
-<p><strong>Total users:</strong> {{ total_users }}</p>
-
-<h3>Number of websites each user favorites</h3>
-<ul>
-  {% for user in websites_per_user %}
-    <li>{{ user.username }}: {{ user.n_favourites }} favorite website{% if user.n_favourites != 1 %}s{% endif %}</li>
-  {% empty %}
-    <li>No users or favorites yet!</li>
-  {% endfor %}
-</ul>
-
+  </ul>
+</div>
 {% endblock %}

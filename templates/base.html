@@ -1,36 +1,47 @@
 {% load static %}
-{% now "U" as ts %}
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>{% block title %}SaleMate{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}?v={{ ts }}">
-    <link rel="stylesheet" href="{% static 'css/skeleton.css' %}?v={{ ts }}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ ts }}">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap" rel="stylesheet">
 
-    <meta name="theme-color" content="#4EBDAD">
-</head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-<body class="bg-light">
-  <header class="bg-primary text-white py-3 mb-4" style="background-color: #4EBDAD; color: white;">
-    <div class="container d-flex align-items-center gap-3">
-      <a class="d-inline-flex align-items-center text-white text-decoration-none">
-        <div class="lh-sm">
-          <h1 class="h4 mb-0">SaleMate</h1>
-        </div>
-      </a>
-    </div>
-  </header>
+    {% now "U" as ts %}
+    <link rel="stylesheet" href="{% static 'css/salemate.css' %}?v={{ ts }}">
+  </head>
 
-  <main class="container">
-    {% block send_search %}{% endblock %}
-    {% block filter %}{% endblock %}
-    {% block content %}{% endblock %}
-  </main>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      <a class="navbar-brand" href="#">SaleMate</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-</body>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+        {% block navbar_form %}{% endblock %}
+      </div>
+    </nav>
+
+    <main role="main" class="container mt-5 pt-5">
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
 </html>
