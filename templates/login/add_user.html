@@ -17,6 +17,9 @@
     {{ form.as_p }}
 
     <button type="submit" class="btn btn-primary">Submit</button>
+      <a href="{% url 'user-list' %}">
+    <button type="button">Back</button>
+</a>
   </form>
 {% endblock %}
 
