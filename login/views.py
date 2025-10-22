@@ -56,8 +56,8 @@ class UserDetailView(DetailView):
     slug_url_kwarg = "username"
 
 
-from django.shortcuts import redirect
-from .forms import UserForm
+from django.shortcuts import render, redirect
+from .forms import UserForm, UserContactForm
 
 def add_user(request):
     if request.method == "POST":
@@ -69,3 +69,16 @@ def add_user(request):
         form = UserForm()
     return render(request, "login/add_user.html", {"form": form})
 
+def user_contact(request):
+    if request.method == "POST":
+        form = UserContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            return render(request, "login/success.html", {"name": name, "email": email})
+    else:
+        form = UserContactForm()
+    return render(request, "login/user_contact.html", {"form": form})
+
+def success_view(request):
+    return render(request, 'success.html')

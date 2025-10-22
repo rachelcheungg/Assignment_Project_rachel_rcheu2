@@ -11,3 +11,7 @@ class UserForm(forms.ModelForm):
 
     def clean_last_name(self):
         return self.cleaned_data["last_name"].strip()
+
+class UserContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
