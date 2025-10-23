@@ -1,5 +1,10 @@
-The sales tracker displays sales across different stores on one platform. 
-Users can browse sales happening at the moment by category or popularity.
+My project idea is to create a social app called SaleMate that allows users
+to create an account and add their favorite websites and their favorite
+items/finds from those websites. 
+Users can also browse other users' storefronts.
+In essence, each user effectively has a personalized storefront page showcasing their favorite online finds.
+
+⸻
 
 Week 3: \
 Why these models/fields?
@@ -53,3 +58,13 @@ Week 7: \
 In assignment 7, I implemented a data visualization feature using Matplotlib. 
 I added ORM aggregations in views.py to generate summary statistics and display them as a bar chart on the site. 
 I also set up a custom /static/ folder with a global CSS file (style.css) to apply a consistent color theme and layout across all pages.
+
+Week 8: \
+This week, I created a GET search method for searching users, and I implemented two forms using the POST method with function-based views and class-based view.
+This week's assignment taught me the difference between using GET and POST, and when we would use FBVs vs. CBVs.
+GET is used for retrieving data or displaying information that doesn't change the server's state.
+It's ideal for actions that are safe, replicable, and shareable.
+On the other hand, POST is used to send data to the server (e.g., creating, updating, or deleting).
+POST is ideal when your action is changing something.
+CBVs help to reduce boilerplate by handling common patterns like form rendering and validation automatically.
+FBVs are generally used when you need simple or highly customized logic.

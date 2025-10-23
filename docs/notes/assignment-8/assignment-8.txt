@@ -1,0 +1,13 @@
+* CSRF prevents malicious websites from submitting unauthorized requests on behalf of logged-in users.
+* CSRF protects sensitive actions (like creating or deleting data) from being triggered without user consent.
+* Django form submission process:
+    1. user requests page
+    2. Django renders form with CSRF token
+    3. user submits form
+    4. Django validates data
+    5. saves data or redirects on successful form submission
+* Function-based views are simple and allow for explicit control over request flow. It's ideal for simple or highly
+  customized logic.
+* Class-based views reduce boilerplate by handling common tasks automatically. It's ideal for reuse.
+* GET requests retrieve or search data. It's safe, sharable, and repeatable.
+* POST requests are used when submitting or modifying data on the server. Unlike GET, it's not repeatable or sharable.
