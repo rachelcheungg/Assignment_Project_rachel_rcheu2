@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
+from matplotlib import pyplot as plt
+from django.http import HttpResponse
 from login.models import User
 from search.models import Website
+from io import BytesIO
 
 class UserFavoritesAPI(View):
     def get(self, request):
@@ -21,3 +24,35 @@ class UserFavoritesAPI(View):
             "results": results
         }
         return JsonResponse(data)
+
+import json
+import urllib.request
+from django.urls import reverse
+
+def favorites_chart_png(request):
+    api_url = request.build_absolute_uri(reverse("api_user_favorites"))
+
+    with urllib.request.urlopen(api_url) as resp:
+        payload = json.load(resp)
+
+    results = payload.get("results", [])
+    usernames = [r["user"] for r in results]
+    favorite_counts = [len(r["favorites"]) for r in results]
+
+    fig, ax = plt.subplots(figsize=(6.5, 3.2), dpi=150)
+    x = range(len(usernames))
+
+    ax.bar(x, favorite_counts, color="#13294B")
+    ax.set_title("Number of Favorite Websites per User")
+    ax.set_xlabel("User")
+    ax.set_ylabel("Number of Favorites")
+    ax.set_xticks(list(x))
+    ax.set_xticklabels(usernames, rotation=45, ha="right")
+
+    fig.tight_layout()
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    plt.close(fig)
+    buf.seek(0)
+    return HttpResponse(buf.getvalue(), content_type="image/png")
