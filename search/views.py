@@ -102,10 +102,11 @@ def total_websites_chart(request):
 
 from django.http import JsonResponse
 
-def api_websites_by_category(request):
+def api_category(request):
     q = (request.GET.get("q") or "").strip()
     qs = Category.objects.all().values("category_name")
     if q:
-        qs = Category.objects.filter(category_name__icontains=q).values("category_name")
-    data = list(qs.order_by("category_name"))
-    return JsonResponse(data, safe=False)
+        qs = Category.objects.filter(category_name__icontains=q)
+    category_names = list(qs.order_by("category_name").values_list("category_name", flat=True))
+    data = {"category_name": category_names}
+    return JsonResponse(data)
