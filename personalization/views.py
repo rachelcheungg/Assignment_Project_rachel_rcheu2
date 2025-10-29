@@ -60,3 +60,12 @@ def favorites_chart_png(request):
     plt.close(fig)
     buf.seek(0)
     return HttpResponse(buf.getvalue(), content_type="image/png")
+
+def api_ping_jsonresponse(request):
+    return JsonResponse({"ok": True})
+
+
+def api_ping_httpresponse(request):
+    payload = json.dumps({"ok": True})
+    payload2 = json.loads(payload)
+    return HttpResponse(payload2, content_type="application/json")
