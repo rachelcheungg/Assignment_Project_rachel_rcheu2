@@ -28,6 +28,10 @@ class UserFavoritesAPI(View):
 import json
 import urllib.request
 from django.urls import reverse
+from django.views.generic import TemplateView
+
+class FavoritesChartPage(TemplateView):
+    template_name = "personalization/favorite_count_chart.html"
 
 def favorites_chart_png(request):
     api_url = request.build_absolute_uri(reverse("api_user_favorites"))
