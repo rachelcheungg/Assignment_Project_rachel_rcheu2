@@ -62,10 +62,37 @@ def favorites_chart_png(request):
     return HttpResponse(buf.getvalue(), content_type="image/png")
 
 def api_ping_jsonresponse(request):
-    return JsonResponse({"ok": True})
+    users = User.objects.all()
+
+    results = []
+    for user in users:
+        favorite_websites = Website.objects.filter(favorites__user=user).values("website_name")
+        results.append({
+            "user": user.username,
+            "favorites": list(favorite_websites)
+        })
+
+    data = {
+        "count": len(results),
+        "results": results
+    }
+    return JsonResponse(data)
 
 
 def api_ping_httpresponse(request):
-    payload = json.dumps({"ok": True})
-    payload2 = json.loads(payload)
-    return HttpResponse(payload2, content_type="application/json")
+    users = User.objects.all()
+
+    results = []
+    for user in users:
+        favorite_websites = Website.objects.filter(favorites__user=user).values("website_name")
+        results.append({
+            "user": user.username,
+            "favorites": list(favorite_websites)
+        })
+
+    data = {
+        "count": len(results),
+        "results": results
+    }
+    payload = json.dumps(data)
+    return HttpResponse(payload, content_type="application/json")
