@@ -7,4 +7,5 @@ urlpatterns = [
     path("websites/", views.WebsiteListView.as_view(), name='website-list-cbv'),
     path("charts/categories.png", category_counts_chart, name="chart-categories"),
     path("charts/total-websites.png", views.total_websites_chart, name="chart-total-websites"),
+    path("api/websites/", views.api_websites_by_category, name="api-websites"),
 ]
