@@ -1,0 +1,9 @@
+* A JSON API delivers structured data in JSON format so other programs, web pages, or scripts can easily read and use it.
+* HttpResponse returns plain text or HTML, while JsonResponse automatically serializes Python data to JSON and sets the
+  MIME type to application/json, making it ideal for APIs.
+* The chart I created displays the number of favorite websites for each user. The chart view (favorites_chart_png)
+  fetches data from the JSON API using urllib.request, parses it with json.load(), and uses matplotlib to render a bar
+  chart that’s returned as a PNG image.
+
+Other notes:
+* I used ChatGPT to help with some of the code for this week, mainly for fixing small errors and helping me create the chart.

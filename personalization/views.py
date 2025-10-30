@@ -95,4 +95,4 @@ def api_ping_httpresponse(request):
         "results": results
     }
     payload = json.dumps(data)
-    return HttpResponse(payload, content_type="application/json")
+    return HttpResponse(payload, content_type="text/plain")

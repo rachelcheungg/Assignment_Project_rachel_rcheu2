@@ -68,3 +68,8 @@ On the other hand, POST is used to send data to the server (e.g., creating, upda
 POST is ideal when your action is changing something.
 CBVs help to reduce boilerplate by handling common patterns like form rendering and validation automatically.
 FBVs are generally used when you need simple or highly customized logic.
+
+Week 9: \
+This week, I added new API endpoints for user favorites and chart visualization.
+`/api/user_favorites/` returns JSON data about each user’s number of favorite websites.
+`/personalization/charts/favorites.png` generates a bar chart of the count of favorite websites per user from the API data.
