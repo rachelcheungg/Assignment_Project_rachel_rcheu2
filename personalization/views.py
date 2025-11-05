@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from login.models import User
 from search.models import Website
 from io import BytesIO
+import requests
 
 class UserFavoritesAPI(View):
     def get(self, request):
@@ -96,3 +97,31 @@ def api_ping_httpresponse(request):
     }
     payload = json.dumps(data)
     return HttpResponse(payload, content_type="text/plain")
+
+
+class LibraryBooks(View):
+    def get(self, request):
+        query = request.GET.get("q")
+        params = {
+            "q": query,
+        }
+
+        try:
+            output_raw_all = requests.get("https://openlibrary.org/search.json?q=<query>", params=params, timeout=5)
+
+            output_raw_all.raise_for_status()
+            output_polished_all = output_raw_all.json()
+
+            output_polished_cw_only = output_polished_all.get("docs", [])
+
+            filtered = []
+            for doc in output_polished_cw_only:
+                filtered.append({
+                    "author": doc.get("author_name", []),
+                    "book": doc.get("title")
+                })
+
+            return JsonResponse({"library": filtered})
+
+        except requests.exceptions.RequestException as e:
+            return JsonResponse({"error": str(e)}, status=502)
