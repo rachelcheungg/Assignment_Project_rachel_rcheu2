@@ -125,3 +125,32 @@ class LibraryBooks(View):
 
         except requests.exceptions.RequestException as e:
             return JsonResponse({"error": str(e)}, status=502)
+
+class LibraryBooksRender(View):
+    def get(self, request):
+        query = request.GET.get("q")
+        params = {
+            "q": query,
+        }
+
+        try:
+            output_raw_all = requests.get("https://openlibrary.org/search.json?q=<query>", params=params, timeout=5)
+
+            output_raw_all.raise_for_status()
+            output_polished_all = output_raw_all.json()
+
+            output_polished_cw_only = output_polished_all.get("docs", [])
+
+            filtered = []
+            for doc in output_polished_cw_only:
+                filtered.append({
+                    "author": doc.get("author_name", []),
+                    "book": doc.get("title")
+                })
+
+            context = {"library": filtered}
+            return render(request, "personalization/library_books.html", context)
+
+        except requests.exceptions.RequestException as e:
+            context = {"library": [], "error": str(e)}
+            return render(request, "personalization/library_books.html", context)

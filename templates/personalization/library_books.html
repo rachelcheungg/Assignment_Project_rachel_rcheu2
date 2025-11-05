@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Library Books</h1>
+
+  {% if error %}
+    <p style="color: red;">Error: {{ error }}</p>
+  {% endif %}
+
+  {% if library %}
+    <ul>
+      {% for item in library %}
+        <li>
+            <strong>Author:</strong> {{ item.author|join:", " }}<br>
+            <strong>Book:</strong> {{ item.book }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No books found.</p>
+  {% endif %}
+
+{% endblock %}
