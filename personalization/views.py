@@ -118,7 +118,8 @@ class LibraryBooks(View):
             for doc in output_polished_cw_only:
                 filtered.append({
                     "author": doc.get("author_name", []),
-                    "book": doc.get("title")
+                    "book": doc.get("title"),
+                    "first_published": doc.get("first_publish_year")
                 })
 
             return JsonResponse({"library": filtered})
