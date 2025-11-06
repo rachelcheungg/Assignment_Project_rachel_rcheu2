@@ -145,10 +145,11 @@ class LibraryBooksRender(View):
             for doc in output_polished_cw_only:
                 filtered.append({
                     "author": doc.get("author_name", []),
-                    "book": doc.get("title")
+                    "book": doc.get("title"),
+                    "first_published": doc.get("first_publish_year")
                 })
 
-            context = {"library": filtered}
+            context = {"library": filtered, "query": query}
             return render(request, "personalization/library_books.html", context)
 
         except requests.exceptions.RequestException as e:

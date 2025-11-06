@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Library Books</h1>
+  <h1>Open Library Search</h1>
+
+  <form method="get" class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search"
+             name="q" placeholder="Search library" aria-label="Search"
+             value="{{ query|default_if_none:'' }}">
+      <button type="submit">Search</button>
+      {% if query %}<a class="btn btn-outline-secondary ms-2" href="{% url 'library-books' %}">Clear</a>{% endif %}
+  </form>
 
   {% if error %}
     <p style="color: red;">Error: {{ error }}</p>
@@ -12,7 +20,8 @@
       {% for item in library %}
         <li>
             <strong>Author:</strong> {{ item.author|join:", " }}<br>
-            <strong>Book:</strong> {{ item.book }}
+            <strong>Book:</strong> {{ item.book }}<br>
+            <strong>First published:</strong> {{ item.first_published }}
         </li>
       {% endfor %}
     </ul>
