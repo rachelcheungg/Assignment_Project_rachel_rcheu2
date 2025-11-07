@@ -1,0 +1,49 @@
+What API you picked and why
+* I chose the Open Library API because I think it was the most related to my project.
+  The idea for my website is to allow users to list/post their favorite online stores or finds.
+  The Open Library API is related in the sense that users could list their favorite books.
+  Additionally, I chose this API because it's public, keyless, and provides rich data on books and authors.
+
+What fields you extracted
+* The API endpoint I used is: https://openlibrary.org/search.json?q=<query>.
+  This returns a JSON object with a list of book documents under the "docs" key.
+  From the raw JSON, I extracted "author_name", "title", and "first_publish_year" from the "docs" key.
+
+How you handled errors/timeouts
+* To avoid crashes when data was missing, I used the .get() method.
+  I added timeout=5 in the requests.get() call to handle slow responses and prevent the page from hanging.
+
+What the final JSON looks like (this is a sample of the output since it's rather large):
+{
+  "library": [
+    {
+      "author": [
+        "Jane Austen"
+      ],
+      "book": "Sense and Sensibility",
+      "first_published": 1811
+    },
+    {
+      "author": [
+        "Chandeep Chhabra"
+      ],
+      "book": "Power Query Beyond the User Interface",
+      "first_published": 2025
+    },
+  ]
+}
+
+Any API limitation or quirk you noticed
+* One limitation is that I wasn't able to figure out how to filter strictly by author.
+  I think this is tricky because it depends on how metadata is stored.
+
+Other notes:
+* I used ChatGPT to help me filter out the fields I wanted ('author_name', 'title', and 'first_publish_year')
+  since it was nested in the "docs" key, and I wasn't sure how to extract them.
+* I also used ChatGPT to help me create the library_books.html and to troubleshoot issues I was having with implementing
+  a "clear" button.
+* After today's (11/06/2025) presentations, I implemented the suggestions:
+    * I first modified LibraryBooksRender view so that the API request to Open Library is only made when a search query
+      is present.
+    * Then I added pagination by updating LibraryBooksRender view and the corresponding library_books.html template.
+    * I used ChatGPT to help me implement these suggestions.
