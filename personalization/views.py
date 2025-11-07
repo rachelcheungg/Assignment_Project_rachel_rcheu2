@@ -1,3 +1,5 @@
+import math
+
 from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
@@ -130,29 +132,50 @@ class LibraryBooks(View):
 class LibraryBooksRender(View):
     def get(self, request):
         query = request.GET.get("q")
-        params = {
-            "q": query,
-        }
+        page = int(request.GET.get("page", 1))
+        limit = int(request.GET.get("limit", 10))
 
-        try:
-            output_raw_all = requests.get("https://openlibrary.org/search.json?q=<query>", params=params, timeout=5)
+        context = {"query": query, "page": page, "limit": limit}
 
-            output_raw_all.raise_for_status()
-            output_polished_all = output_raw_all.json()
+        if query:
+            params = {"q": query, "page": page, "limit": limit}
 
-            output_polished_cw_only = output_polished_all.get("docs", [])
+            try:
+                output_raw_all = requests.get("https://openlibrary.org/search.json?q=<query>", params=params, timeout=5)
 
-            filtered = []
-            for doc in output_polished_cw_only:
-                filtered.append({
-                    "author": doc.get("author_name", []),
-                    "book": doc.get("title"),
-                    "first_published": doc.get("first_publish_year")
+                output_raw_all.raise_for_status()
+                output_polished_all = output_raw_all.json()
+
+                output_polished_cw_only = output_polished_all.get("docs", [])
+                num_found = output_polished_all.get("num_found", 0)
+
+                filtered = []
+                for doc in output_polished_cw_only:
+                    filtered.append({
+                        "author": doc.get("author_name", []),
+                        "book": doc.get("title"),
+                        "first_published": doc.get("first_publish_year")
+                    })
+
+                total_pages = int(math.ceil(num_found / limit))
+
+                context.update({
+                    "library": filtered,
+                    "num_found": num_found,
+                    "total_pages": total_pages,
                 })
 
-            context = {"library": filtered, "query": query}
-            return render(request, "personalization/library_books.html", context)
+            except requests.exceptions.RequestException as e:
+                context.update({
+                    "library": [],
+                    "error": str(e),
+                    "total_pages": 1,
+                })
 
-        except requests.exceptions.RequestException as e:
-            context = {"library": [], "error": str(e)}
-            return render(request, "personalization/library_books.html", context)
+        else:
+            context.update({
+                "library": [],
+                "total_pages": 1,
+            })
+
+        return render(request, "personalization/library_books.html", context)

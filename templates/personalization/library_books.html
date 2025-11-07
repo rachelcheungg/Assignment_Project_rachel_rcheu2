@@ -21,10 +21,19 @@
         <li>
             <strong>Author:</strong> {{ item.author|join:", " }}<br>
             <strong>Book:</strong> {{ item.book }}<br>
-            <strong>First published:</strong> {{ item.first_published }}
+            <strong>First published:</strong> {{ item.first_published }}<br>
         </li>
       {% endfor %}
     </ul>
+    <div class="pagination">
+        {% if page > 1 %}
+        <a class="btn btn-outline-info mb-4" href="?q={{ query }}&page={{ page|add:-1 }}">Previous</a>
+        {% endif %}
+        <span class="current btn btn-outline-info mb-4">Page {{ page }} of {{ total_pages }}</span>
+        {% if page < total_pages %}
+        <a class="btn btn-outline-info mb-4" href="?q={{ query }}&page={{ page|add:1 }}">Next</a>
+        {% endif %}
+    </div>
   {% else %}
     <p>No books found.</p>
   {% endif %}
