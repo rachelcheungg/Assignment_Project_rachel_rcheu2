@@ -133,3 +133,25 @@ def export_websites_csv(request):
     for row in rows:
         writer.writerow(row)
     return response
+
+def export_websites_json(request):
+    data = list(
+        Website.objects
+        .select_related("category")
+        .values_list("website_name", "website_address", "category__category_name")
+        .order_by("website_name")
+    )
+
+    json_content = {
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "record_count": len(data),
+        "websites": data,
+    }
+
+    response = JsonResponse(json_content, json_dumps_params={"indent": 2})
+
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    filename = f"websites_{timestamp}.json"
+
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
