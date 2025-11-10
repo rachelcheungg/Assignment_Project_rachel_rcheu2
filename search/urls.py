@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .views import category_counts_chart
+from .views import category_counts_chart, export_websites_csv
 
 urlpatterns = [
     path("categories/", views.CategoryListView.as_view(), name='categories-list-url'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path("charts/categories.png", category_counts_chart, name="chart-categories"),
     path("charts/total-websites.png", views.total_websites_chart, name="chart-total-websites"),
     path("api/categories/", views.api_category, name="api-categories"),
+    path("export/websites.csv", export_websites_csv, name="export-websites-csv"),
 ]

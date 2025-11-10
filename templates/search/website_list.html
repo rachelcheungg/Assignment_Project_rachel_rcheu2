@@ -14,4 +14,8 @@
         <li>No websites yet!</li>
     {% endfor %}
 </ul>
+
+<div class="mt-3">
+    <a class="btn btn-outline-primary btn-sm" href="{% url 'export-websites-csv' %}">Download Websites (CSV)</a>
+</div>
 {% endblock %}

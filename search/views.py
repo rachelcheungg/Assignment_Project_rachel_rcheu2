@@ -110,3 +110,26 @@ def api_category(request):
     category_names = list(qs.order_by("category_name").values_list("category_name", flat=True))
     data = {"category_name": category_names}
     return JsonResponse(data)
+
+import csv
+from datetime import datetime
+
+def export_websites_csv(request):
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    filename = f"websites_{timestamp}.csv"
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+
+    writer = csv.writer(response)
+    writer.writerow(["website_name", "website_address", "category"])
+    rows = (
+        Website.objects
+        .select_related("category")
+        .values_list("website_name", "website_address", "category__category_name")
+        .order_by("website_name")
+    )
+
+    for row in rows:
+        writer.writerow(row)
+    return response
