@@ -7,6 +7,9 @@ from .models import User
 from django.db.models import Count, Q
 from .forms import UserForm, UserContactForm, FeedbackForm
 from django.urls import reverse_lazy
+from django.contrib.auth import login
+from .forms_auth import UserSignUpForm
+
 
 def user_list(request):
     users = User.objects.all()
@@ -91,3 +94,16 @@ class FeedbackView(FormView):
 
 def success_view(request):
     return render(request, 'login/success.html')
+
+
+def signup_view(request):
+    if request.method == "POST":
+        form = UserSignUpForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            login(request, new_user)
+            return redirect("user-list")
+    else:
+        form = UserSignUpForm()
+
+    return render(request, "login/signup.html", {"form": form})

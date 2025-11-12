@@ -27,8 +27,11 @@
     </form>
 
     <!-- Helpful note for users -->
-    <p class="mt-3 text-muted small text-center">
-      Don’t have an account? Contact the site administrator.
+    <p class="text-center mt-3">
+        Don’t have an account?
+        <a href="{% url 'signup_urlpattern' %}" class="text-decoration-none">
+            Sign Up
+        </a>
     </p>
   </div>
 {% endblock %}
