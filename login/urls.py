@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.urls import path, include
 from . import views
 from .views import FeedbackView
@@ -10,5 +11,8 @@ urlpatterns = [
     path("user-contact/", views.user_contact, name="user-contact-url"),
     path('feedback/', FeedbackView.as_view(), name='feedback-form'),
     path("success/", views.success_view, name="success-url"),
+    path('login/',
+         LoginView.as_view(template_name='login/login.html'),
+         name='login_urlpattern'),
     path("<str:username>/", views.UserDetailView.as_view(), name='user-detail-url'),
 ]
