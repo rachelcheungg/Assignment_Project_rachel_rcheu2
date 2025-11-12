@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
+from login.models import User
 from .models import Category, Website
 from django.db.models import Count, Q
 from io import BytesIO
@@ -155,3 +156,28 @@ def export_websites_json(request):
 
     response["Content-Disposition"] = f'attachment; filename="{filename}"'
     return response
+
+class ReportsView(TemplateView):
+    template_name = "search/reports.html"
+
+    def get_context_data(self, **kwargs):
+
+        ctx = super().get_context_data(**kwargs)
+
+        ctx["total_users"] = User.objects.count()
+        ctx["websites_per_user"] = (
+            User.objects
+            .annotate(n_favourites=Count("favorites"))
+            .values("username", "n_favourites")
+            .order_by("username")
+        )
+
+        ctx["total_websites"] = Website.objects.count()
+        ctx["websites_per_category"] = (
+            Website.objects
+            .values("category__category_name")
+            .annotate(n_websites=Count("id"))
+            .order_by("category__category_name")
+        )
+
+        return ctx
