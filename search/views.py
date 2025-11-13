@@ -9,9 +9,11 @@ from django.http import HttpResponse
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'search/category_list.html'
     context_object_name = 'category_list'
@@ -41,7 +43,7 @@ class CategoryListView(ListView):
         return ctx
 
 
-class WebsiteListView(View):
+class WebsiteListView(LoginRequiredMixin, View):
     def get(self, request):
         return render(
             request,
@@ -49,7 +51,7 @@ class WebsiteListView(View):
             context={'websites': Website.objects.all()}
         )
 
-
+@login_required(login_url='login_urlpattern')
 def category_counts_chart(request):
     data = (
         Category.objects
@@ -82,7 +84,7 @@ def category_counts_chart(request):
 
     return HttpResponse(buf.getvalue(), content_type="image/png")
 
-
+@login_required(login_url='login_urlpattern')
 def total_websites_chart(request):
     total = Website.objects.count()
 
@@ -103,6 +105,7 @@ def total_websites_chart(request):
 
 from django.http import JsonResponse
 
+@login_required(login_url='login_urlpattern')
 def api_category(request):
     q = (request.GET.get("q") or "").strip()
     qs = Category.objects.all().values("category_name")
@@ -115,6 +118,7 @@ def api_category(request):
 import csv
 from datetime import datetime
 
+@login_required(login_url='login_urlpattern')
 def export_websites_csv(request):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
     filename = f"websites_{timestamp}.csv"
@@ -135,6 +139,7 @@ def export_websites_csv(request):
         writer.writerow(row)
     return response
 
+@login_required(login_url='login_urlpattern')
 def export_websites_json(request):
     data = list(
         Website.objects
@@ -157,7 +162,7 @@ def export_websites_json(request):
     response["Content-Disposition"] = f'attachment; filename="{filename}"'
     return response
 
-class ReportsView(TemplateView):
+class ReportsView(LoginRequiredMixin, TemplateView):
     template_name = "search/reports.html"
 
     def get_context_data(self, **kwargs):

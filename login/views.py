@@ -9,8 +9,10 @@ from .forms import UserForm, UserContactForm, FeedbackForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from .forms_auth import UserSignUpForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
+@login_required(login_url='login_urlpattern')
 def user_list(request):
     users = User.objects.all()
     template = loader.get_template("login/user_list.html")
@@ -18,12 +20,12 @@ def user_list(request):
     output = template.render(context, request)
     return HttpResponse(output)
 
-
+@login_required(login_url='login_urlpattern')
 def user_list_render(request) :
     users = User.objects.all()
     return render(request, "login/user_list.html", {"users": users})
 
-class UserListView(ListView):
+class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = "login/user_list.html"
     context_object_name = "users"
@@ -53,13 +55,14 @@ class UserListView(ListView):
 
         return ctx
 
-class UserDetailView(DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "login/user_detail.html"
     context_object_name = "user"
     slug_field = "username"
     slug_url_kwarg = "username"
 
+@login_required(login_url='login_urlpattern')
 def add_user(request):
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -70,6 +73,7 @@ def add_user(request):
         form = UserForm()
     return render(request, "login/add_user.html", {"form": form})
 
+@login_required(login_url='login_urlpattern')
 def user_contact(request):
     if request.method == "POST":
         form = UserContactForm(request.POST)
@@ -81,7 +85,7 @@ def user_contact(request):
         form = UserContactForm()
     return render(request, "login/user_contact.html", {"form": form})
 
-class FeedbackView(FormView):
+class FeedbackView(LoginRequiredMixin, FormView):
     form_class = FeedbackForm
     template_name = "login/feedback.html"
     success_url = reverse_lazy("success-url")
@@ -92,10 +96,11 @@ class FeedbackView(FormView):
         print(f"Feedback from {username}: {feedback}")
         return super().form_valid(form)
 
+@login_required(login_url='login_urlpattern')
 def success_view(request):
     return render(request, 'login/success.html')
 
-
+@login_required(login_url='login_urlpattern')
 def signup_view(request):
     if request.method == "POST":
         form = UserSignUpForm(request.POST)

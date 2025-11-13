@@ -9,8 +9,10 @@ from login.models import User
 from search.models import Website
 from io import BytesIO
 import requests
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class UserFavoritesAPI(View):
+class UserFavoritesAPI(LoginRequiredMixin, View):
     def get(self, request):
         users = User.objects.all()
 
@@ -33,9 +35,10 @@ import urllib.request
 from django.urls import reverse
 from django.views.generic import TemplateView
 
-class FavoritesChartPage(TemplateView):
+class FavoritesChartPage(LoginRequiredMixin, TemplateView):
     template_name = "personalization/favorite_count_chart.html"
 
+@login_required(login_url='login_urlpattern')
 def favorites_chart_png(request):
     api_url = request.build_absolute_uri(reverse("api_user_favorites"))
 
@@ -64,6 +67,7 @@ def favorites_chart_png(request):
     buf.seek(0)
     return HttpResponse(buf.getvalue(), content_type="image/png")
 
+@login_required(login_url='login_urlpattern')
 def api_ping_jsonresponse(request):
     users = User.objects.all()
 
@@ -81,7 +85,7 @@ def api_ping_jsonresponse(request):
     }
     return JsonResponse(data)
 
-
+@login_required(login_url='login_urlpattern')
 def api_ping_httpresponse(request):
     users = User.objects.all()
 
@@ -101,7 +105,7 @@ def api_ping_httpresponse(request):
     return HttpResponse(payload, content_type="text/plain")
 
 
-class LibraryBooks(View):
+class LibraryBooks(LoginRequiredMixin, View):
     def get(self, request):
         query = request.GET.get("q")
         params = {
@@ -129,7 +133,7 @@ class LibraryBooks(View):
         except requests.exceptions.RequestException as e:
             return JsonResponse({"error": str(e)}, status=502)
 
-class LibraryBooksRender(View):
+class LibraryBooksRender(LoginRequiredMixin, View):
     def get(self, request):
         query = request.GET.get("q")
         page = int(request.GET.get("page", 1))
