@@ -1,66 +1,151 @@
 {% load static %}
-<!doctype html>
+{% now "U" as ts %}
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}SaleMate{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}SaleMate{% endblock %}</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/salemate.css' %}?v={{ ts }}">
+</head>
+<body class="bg-light">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- ===========================
+       HEADER
+       =========================== -->
+  <header class="bg-dark text-white py-3 mb-4">
+    <div class="container d-flex align-items-center w-100">
 
-    {% now "U" as ts %}
-    <link rel="stylesheet" href="{% static 'css/salemate.css' %}?v={{ ts }}">
-  </head>
-
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">SaleMate</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain"
-                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav ml-auto">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <form action="{% url 'logout_urlpattern' %}" method="POST" class="form-inline my-2 my-lg-0">
-                            {% csrf_token %}
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout, {{user.get_username }}</button>
-                        </form>
-                    </li>
-                    {% else %}
-                    <li class="nav-item mr-2">
-                        <a class="btn btn-sm btn-outline-light" href="{% url 'login_urlpattern' %}">Login</a>
-                    </li>
-                    <li class="nav-item mr-2">
-                        <a class="btn btn-sm btn-outline-light" href="{% url 'signup_urlpattern' %}">Sign Up</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+      <!-- Brand -->
+      <a class="d-inline-flex align-items-center text-white text-decoration-none"
+         href="{% url 'export-reports-url' %}">
+        <img src="{% static 'images/logo.png' %}" alt="SaleMate logo"
+             width="36" height="36" class="me-2">
+        <div class="lh-sm">
+          <h1 class="h4 mb-0">SaleMate</h1>
+          <span class="small opacity-75">Analytics & Management</span>
         </div>
-    </nav>
+      </a>
 
-    <main role="main" class="container mt-5 pt-5">
-      {% block content %}{% endblock %}
-    </main>
+      <!-- Auth controls -->
+      <div class="ms-auto">
+        {% if user.is_authenticated %}
+          <form action="{% url 'logout_urlpattern' %}" method="post" class="d-inline-block">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-light" type="submit">
+              Logout, {{ user.get_username }}
+            </button>
+          </form>
+        {% else %}
+          <a class="btn btn-sm btn-outline-light me-2"
+             href="{% url 'login_urlpattern' %}">Login</a>
+          <a class="btn btn-sm btn-success"
+             href="{% url 'signup_urlpattern' %}">Sign Up</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  </body>
+  <!-- ===========================
+       MAIN NAVIGATION
+       =========================== -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+    <div class="container">
+
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div id="mainNav" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <!-- LOGIN APP LINKS -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="usersMenu"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="usersMenu">
+              <li><a class="dropdown-item" href="{% url 'user-list' %}">User List</a></li>
+              <li><a class="dropdown-item" href="{% url 'add-user-url' %}">Add User</a></li>
+              <li><a class="dropdown-item" href="{% url 'user-contact-url' %}">User Contact</a></li>
+              <li><a class="dropdown-item" href="{% url 'feedback-form' %}">Feedback Form</a></li>
+              <li><a class="dropdown-item" href="{% url 'success-url' %}">Success Page</a></li>
+            </ul>
+          </li>
+
+          <!-- PERSONALIZATION APP LINKS -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="personalMenu"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Personalization
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="personalMenu">
+              <li><a class="dropdown-item" href="{% url 'api_user_favorites' %}">User Favorites API</a></li>
+              <li><a class="dropdown-item" href="{% url 'favorites-chart-page' %}">Favorites Chart Page</a></li>
+              <li><a class="dropdown-item" href="{% url 'favorites-chart-png' %}">Favorites Chart (PNG)</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'api-ping-httpresponse' %}">Ping (HttpResponse)</a></li>
+              <li><a class="dropdown-item" href="{% url 'api-ping-json' %}">Ping (JsonResponse)</a></li>
+              <li><a class="dropdown-item" href="{% url 'api-books' %}">Books API</a></li>
+              <li><a class="dropdown-item" href="{% url 'library-books' %}">Library Books</a></li>
+            </ul>
+          </li>
+
+          <!-- SEARCH APP LINKS -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="searchMenu"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Search
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="searchMenu">
+              <li><a class="dropdown-item" href="{% url 'categories-list-url' %}">Categories</a></li>
+              <li><a class="dropdown-item" href="{% url 'website-list-cbv' %}">Websites</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'chart-categories' %}">Category Chart (PNG)</a></li>
+              <li><a class="dropdown-item" href="{% url 'chart-total-websites' %}">Total Websites Chart (PNG)</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'api-categories' %}">API: Categories JSON</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'export-websites-csv' %}">Export Websites (CSV)</a></li>
+              <li><a class="dropdown-item" href="{% url 'export-websites-json' %}">Export Websites (JSON)</a></li>
+              <li><a class="dropdown-item" href="{% url 'export-reports-url' %}">Reports</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===========================
+       PAGE CONTENT
+       =========================== -->
+  <main class="container mb-5">
+    {% block content %}
+      <p class="text-muted">Welcome to SaleMate!</p>
+    {% endblock %}
+  </main>
+
+  <!-- ===========================
+       FOOTER
+       =========================== -->
+  <footer class="bg-dark text-white py-3 mt-4">
+    <div class="container text-center small">
+      <p class="mb-0">&copy; 2025 SaleMate Project</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
 </html>
