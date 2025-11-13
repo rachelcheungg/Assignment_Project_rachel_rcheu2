@@ -100,7 +100,6 @@ class FeedbackView(LoginRequiredMixin, FormView):
 def success_view(request):
     return render(request, 'login/success.html')
 
-@login_required(login_url='login_urlpattern')
 def signup_view(request):
     if request.method == "POST":
         form = UserSignUpForm(request.POST)
