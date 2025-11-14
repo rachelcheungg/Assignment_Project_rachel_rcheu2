@@ -73,3 +73,34 @@ Week 9: \
 This week, I added new API endpoints for user favorites and chart visualization.
 `/api/user_favorites/` returns JSON data about each user’s number of favorite websites.
 `/personalization/charts/favorites.png` generates a bar chart of the count of favorite websites per user from the API data.
+
+Week 11: \
+**Part 1**: \
+This week, I added CSV and JSON export functionality that allows users to download a list of websites in either CSV or JSON format.
+I also added a reports page that summarizes information about the websites.
+Users can now easily download a website list and view grouped summaries directly from the web interface.
+
+URLs:
+* http://127.0.0.1:8000/search/reports/
+* http://127.0.0.1:8000/search/export/websites.csv
+* http://127.0.0.1:8000/search/export/websites.json
+
+**Part 2**: \
+I believe all the main routes in my project are protected because they're not things I would want the public/anyone to have access to.
+If I were to leave a route unprotected, essentially, it would probably be the one that directs the user to the 
+Open Library Search page since it's not exactly something I would consider to be sensitive information.
+
+The only public endpoints were the login and signup page since users would need to be able to log in without being 
+authenticated, and similarly, new users would need to register a new account.
+
+After logging in, users are directed to the "User List" page. If a user originally visited a protected page, Django
+redirects them back to the correct URL using the `next` query parameter. After logging out, users are redirected to the login page.
+
+Instructor credentials:
+* **Username**: mohitg2
+* **Password**: graingerlibrary
+
+How signup works is that it uses a simple Django form that collects a username, email, password, and password confirmation. 
+If successful, a new user is created as a regular user (non-staff, non-superuser). 
+Immediately after creation, Django automatically logs the user in and redirects them inside the app to the user list page. 
+The form also ensures username uniqueness and performs basic password confirmation checks.

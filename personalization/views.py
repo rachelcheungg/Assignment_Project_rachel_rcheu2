@@ -42,8 +42,12 @@ class FavoritesChartPage(LoginRequiredMixin, TemplateView):
 def favorites_chart_png(request):
     api_url = request.build_absolute_uri(reverse("api_user_favorites"))
 
-    with urllib.request.urlopen(api_url) as resp:
-        payload = json.load(resp)
+    opener = urllib.request.build_opener()
+    opener.addheaders = [
+        ("Cookie", f"sessionid={request.COOKIES.get('sessionid')}"),
+    ]
+    resp = opener.open(api_url)
+    payload = json.load(resp)
 
     results = payload.get("results", [])
     usernames = [r["user"] for r in results]
