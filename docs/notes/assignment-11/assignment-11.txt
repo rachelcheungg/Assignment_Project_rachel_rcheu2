@@ -1,0 +1,27 @@
+Part 1:
+* The CSV export view generates a downloadable CSV file containing a list of websites
+* The file is returned with headers: "Content-Type: text/csv" and "Content-Disposition: attachment; filename='websites_YYYY-MM-DD_HH-MM.csv'"
+* The first row includes column headers, followed by websites from the database
+* The JSON export view returns a formatted JSON response with metadata:
+  {
+    "generated_at": ISO timestamp,
+    "record_count": total number of websites,
+    "websites": [ ... ]
+  }
+* JsonResponse is used with `json_dumps_params={"indent": 2}` for pretty formatting
+* Both export views are accessible via download buttons on the Reports page
+* The Reports page includes grouped summaries of users and their number of favorite websites, and the number of websites per category
+* A totals row displays overall users and overall websites
+
+Part 2:
+* Authentication protects all user, website, form, report, export, and API routes, ensuring private data is only accessible to logged-in users
+* LoginRequiredMixin and @login_required enforce that a user must be authenticated to view the page
+* The ?next= query parameter stores the original destination when a user is redirected to login.
+  After successful login, Django returns them to that page.
+* Only login and signup are public pages so users can authenticate or create accounts
+* The signup view creates new users with is_staff=False and is_superuser=False to prevent external users from accessing admin
+* The navbar adapts based on authentication: logged-out users see Login/Sign Up while logged-in users see Log Out and full navigation links
+* Logout clears the session and immediately switches the navbar back to the logged-out state
+
+Other notes:
+* I used ChatGPT to help me update the UI for my website, as well as for help with the navbar.

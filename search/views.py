@@ -11,6 +11,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import F
 
 # Create your views here.
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -180,7 +181,7 @@ class ReportsView(LoginRequiredMixin, TemplateView):
         ctx["total_websites"] = Website.objects.count()
         ctx["websites_per_category"] = (
             Website.objects
-            .values("category__category_name")
+            .values(category_name=F("category__category_name"))
             .annotate(n_websites=Count("id"))
             .order_by("category__category_name")
         )
