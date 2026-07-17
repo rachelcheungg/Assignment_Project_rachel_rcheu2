@@ -1,4 +1,4 @@
-My project idea is to create a social app called SaleMate that allows users
+My project idea is to create a social app called PlexFind that allows users
 to create an account and add their favorite websites and their favorite
 items/finds from those websites. 
 Users can also browse other users' storefronts.
